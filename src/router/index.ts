@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+import ContactView from "@/views/ContactView.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -16,6 +16,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  { path: "/contact", name: "Contact", component: ContactView },
 ];
 
 const router = createRouter({
