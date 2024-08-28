@@ -1,16 +1,31 @@
 <template>
   <div class="product-card">
-    <img :src="product.image" :alt="product.title" class="product-image" />
+    <div class="image-container">
+      <img :src="product.image" :alt="product.title" class="product-image" />
+    </div>
     <div class="product-details">
       <h3 class="product-title">{{ product.title }}</h3>
-      <p class="product-description">{{ product.description }}</p>
+      <p class="product-description">
+        {{
+          showFullDescription || !isLongDescription
+            ? product.description
+            : truncatedDescription
+        }}
+        <span
+          v-if="isLongDescription && !showFullDescription"
+          class="show-more-text"
+          @click="toggleDescription"
+        >
+          Show More
+        </span>
+      </p>
       <button class="shop-now-button">Shop Now</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, computed } from "vue";
 
 export default defineComponent({
   name: "ProductCard",
@@ -24,37 +39,61 @@ export default defineComponent({
       required: true,
     },
   },
+  setup(props) {
+    const maxLength = 200; // Maximum length for description before truncation
+    const showFullDescription = ref(false);
+
+    const isLongDescription = computed(() => {
+      return props.product.description.length > maxLength;
+    });
+
+    const truncatedDescription = computed(() => {
+      return `${props.product.description.slice(0, maxLength)}...`;
+    });
+
+    const toggleDescription = () => {
+      showFullDescription.value = !showFullDescription.value;
+    };
+
+    return {
+      isLongDescription,
+      showFullDescription,
+      truncatedDescription,
+      toggleDescription,
+    };
+  },
 });
 </script>
 
 <style scoped>
 .product-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: center;
-  max-width: 300px; /* Adjust max-width as needed */
-  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
-.product-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+.image-container {
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
 }
 
 .product-image {
   width: 100%;
   height: auto;
-  border-radius: 8px;
+  object-fit: cover; /* Ensures the image covers the container without stretching */
+  display: block;
 }
 
 .product-details {
-  margin-top: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Ensures the details section takes up available space */
 }
 
 .product-title {
@@ -65,6 +104,21 @@ export default defineComponent({
 .product-description {
   color: #666;
   margin-bottom: 1rem;
+  text-align: left;
+  overflow: hidden;
+  position: relative;
+}
+
+.show-more-text {
+  color: #666; /* Match description text color */
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
+  text-decoration: underline;
+}
+
+.show-more-text:hover {
+  color: #555;
 }
 
 .shop-now-button {
@@ -76,6 +130,8 @@ export default defineComponent({
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease;
+  align-self: center; /* Center the button horizontally */
+  margin-top: auto; /* Push button to the bottom of the card */
 }
 
 .shop-now-button:hover {

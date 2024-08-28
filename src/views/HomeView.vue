@@ -9,6 +9,12 @@
         :product="product"
       />
     </div>
+    <div>
+      <Testimonials />
+    </div>
+    <div>
+      <WhyUs />
+    </div>
   </div>
 </template>
 
@@ -17,6 +23,8 @@ import { defineComponent } from "vue";
 import Slider from "@/components/Slider.vue";
 import FeaturesSection from "@/components/FeaturesSection.vue";
 import ProductCard from "@/components/ProductCard.vue";
+import Testimonials from "@/components/Testimonials.vue";
+import WhyUs from "@/components/WhyUs.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -24,24 +32,39 @@ export default defineComponent({
     Slider,
     FeaturesSection,
     ProductCard,
+    Testimonials,
+    WhyUs,
   },
   data() {
     return {
       products: [
         {
           image: require("@/assets/product1.jpg"),
-          title: "Product 1",
-          description: "Description for Product 1.",
+          title: "DTF Sheet",
+          description:
+            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit praesentium, recusandae quasi modi, ex quam exercitationem id voluptatem aspernatur sapiente rerum maxime voluptates sunt at assumenda tenetur quis porro soluta!",
         },
         {
-          image: require("@/assets/product1.jpg"),
-          title: "Product 2",
+          image: require("@/assets/product2.jpg"),
+          title: "DTF Gang Roll",
           description: "Description for Product 2.",
         },
         {
-          image: require("@/assets/product1.jpg"),
-          title: "Product 3",
-          description: "Description for Product 3.",
+          image: require("@/assets/product5.jpg"),
+          title: "Free DTF Sample",
+          description:
+            "Receive a complimentary 22x25 DTF sheet, showcasing a vibrant array of designs, with our free sample offer. This is your chance to experience our top-tier print quality firsthand! Our DTF sheets are perfect for testing on various textiles.",
+        },
+        {
+          image: require("@/assets/product4.jpg"),
+          title: "Product 4",
+          description:
+            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit praesentium, recusandae quasi modi, ex quam exercitationem id voluptatem.",
+        },
+        {
+          image: require("@/assets/product5.jpg"),
+          title: "Product 5",
+          description: "Description for Product 5.",
         },
       ],
     };
@@ -51,10 +74,14 @@ export default defineComponent({
 
 <style scoped>
 .product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 2rem;
-  background-color: #f8f9fa;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Responsive grid */
+  gap: 1.5rem; /* Space between cards */
+  padding: 1rem;
+  max-width: 1200px; /* Optional: limit the max width */
+  margin: 0 auto; /* Center the grid */
 }
 </style>

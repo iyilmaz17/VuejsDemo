@@ -43,7 +43,7 @@ export default defineComponent({
 .features-section {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center; /* Center items more evenly */
   padding: 2rem 0;
   background-color: #f8f9fa;
 }
@@ -56,9 +56,10 @@ export default defineComponent({
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1 1 20%;
+  flex: 1 1 calc(33% - 2rem); /* Adjusted for three items per row */
   margin: 1rem;
   min-width: 250px;
+  max-width: 300px; /* Max width to prevent large gaps */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -81,10 +82,16 @@ export default defineComponent({
   margin: 0;
 }
 
+@media (max-width: 1024px) {
+  .feature-box {
+    flex: 1 1 calc(50% - 2rem); /* Two items per row on medium screens */
+  }
+}
+
 @media (max-width: 768px) {
   .feature-box {
-    flex: 1 1 100%;
-    margin: 0.5rem 0;
+    flex: 1 1 calc(50% - 1rem); /* Two items per row on smaller screens */
+    margin: 0.5rem;
   }
 
   .feature-text h3 {
@@ -93,6 +100,10 @@ export default defineComponent({
 }
 
 @media (max-width: 480px) {
+  .feature-box {
+    flex: 1 1 calc(100% - 1rem); /* One item per row on very small screens */
+  }
+
   .feature-text h3 {
     font-size: 1rem;
   }
