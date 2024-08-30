@@ -19,19 +19,23 @@
           Show More
         </span>
       </p>
-      <button class="shop-now-button">Shop Now</button>
+      <button class="shop-now-button" @click="goToProductDetail">
+        Shop Now
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "ProductCard",
   props: {
     product: {
       type: Object as () => {
+        id: number;
         image: string;
         title: string;
         description: string;
@@ -40,6 +44,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const router = useRouter();
     const maxLength = 200; // Maximum length for description before truncation
     const showFullDescription = ref(false);
 
@@ -55,11 +60,17 @@ export default defineComponent({
       showFullDescription.value = !showFullDescription.value;
     };
 
+    const goToProductDetail = () => {
+      router.push({ name: "product-detail", params: { id: 1 } });
+      //router.push({ name: "product-detail", params: { id: props.product.id } });
+    };
+
     return {
       isLongDescription,
       showFullDescription,
       truncatedDescription,
       toggleDescription,
+      goToProductDetail,
     };
   },
 });

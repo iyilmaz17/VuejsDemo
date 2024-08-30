@@ -25,11 +25,18 @@
       </div>
     </nav>
   </div>
+  <div>
+    <AppBreadcrumb />
+  </div>
 </template>
 
 <script>
+import AppBreadcrumb from "@/components/Breadcrumb.vue";
 export default {
   name: "MyNavbar",
+  components: {
+    AppBreadcrumb,
+  },
   data() {
     return {
       targetTime: new Date().getTime() + 10 * 60 * 60 * 1000,

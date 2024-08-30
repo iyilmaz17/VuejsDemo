@@ -46,7 +46,6 @@ export default defineComponent({
   padding: 4rem 2rem;
   color: #fff;
   text-align: center;
-  margin-bottom: 2rem; /* Add bottom margin to create space */
 }
 
 .why-us-title {
