@@ -1,5 +1,4 @@
 <template>
-  <br />
   <div>
     <div class="product-detail-container">
       <ProductImages :productImages="productImages" />
@@ -10,17 +9,20 @@
         :sizes="productSizes"
       />
     </div>
+    <UserReviews :reviews="reviews" />
   </div>
 </template>
 
 <script lang="ts">
 import ProductImages from "@/components/ProductImages.vue";
 import ProductInfo from "@/components/ProductInfo.vue";
+import UserReviews from "@/components/UserReviews.vue"; // Import the component
 
 export default {
   components: {
     ProductImages,
     ProductInfo,
+    UserReviews, // Register the component
   },
   data() {
     return {
@@ -45,7 +47,30 @@ export default {
         "90x100",
         "100x110",
         "110x120",
-      ], // Örnek boyutlar
+      ],
+      reviews: [
+        {
+          id: 1,
+          userImage: require("@/assets/women.jpeg"),
+          userName: "Alice",
+          date: "2024-08-30",
+          title: "Fantastic Product", // Add the title
+          content:
+            "Great product! The quality is superb and delivery was quick.Great product! The quality is superb and delivery was quick.",
+          rating: 1, // 5 stars
+          productImage: require("@/assets/product1.jpg"),
+        },
+        {
+          id: 2,
+          userImage: require("@/assets/man.png"),
+          userName: "Bob",
+          date: "2024-08-29",
+          title: "Good, but not perfect", // Add the title
+          content: "Not bad, but I expected a higher quality.",
+          rating: 4, // 4 stars
+          productImage: require("@/assets/product2.jpg"),
+        },
+      ],
     };
   },
 };
@@ -55,12 +80,12 @@ export default {
 .product-detail-container {
   display: flex;
   justify-content: space-between;
-  gap: 20px; /* Ürün resimleri ve bilgileri arasındaki boşluk */
+  gap: 20px;
 }
 
 @media (max-width: 768px) {
   .product-detail-container {
-    flex-direction: column; /* Küçük ekranlar için dikey düzen */
+    flex-direction: column;
     align-items: center;
   }
 }

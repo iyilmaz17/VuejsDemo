@@ -17,30 +17,67 @@
       </button>
     </div>
 
-    <!-- Quantity input section -->
-    <label>Quantity:</label>
-    <div class="quantity-wrapper">
-      <button class="quantity-button quantity-minus" @click="decreaseQuantity">
-        -
+    <!-- Quantity input section and Add to Cart button -->
+    <div class="quantity-and-cart">
+      <h2>Quantity :</h2>
+      <div class="quantity-wrapper">
+        <button
+          class="quantity-button quantity-minus"
+          @click="decreaseQuantity"
+        >
+          -
+        </button>
+        <input
+          name="quantity"
+          type="number"
+          v-model.number="quantity"
+          min="1"
+          class="quantity-input"
+        />
+        <button class="quantity-button quantity-plus" @click="increaseQuantity">
+          +
+        </button>
+      </div>
+      <button
+        v-if="!selectedFile"
+        class="upload-file-button"
+        @click="triggerFileInput"
+      >
+        Continue to Upload Your File
       </button>
-      <input
-        name="quantity"
-        type="number"
-        v-model.number="quantity"
-        min="1"
-        class="quantity-input"
-      />
-      <button class="quantity-button quantity-plus" @click="increaseQuantity">
-        +
+      <button v-if="selectedFile" class="upload-file-button">
+        Add to Cart
       </button>
     </div>
 
-    <button @click="addToCart">Add to Cart</button>
+    <!-- Hidden file input element -->
+    <input
+      ref="fileInput"
+      type="file"
+      style="display: none"
+      @change="handleFileChange"
+    />
+
+    <!-- File preview section -->
+    <div v-if="selectedFile" class="file-preview">
+      <div class="file-preview-inner">
+        <img
+          v-if="imageUrl"
+          :src="imageUrl"
+          alt="File preview"
+          class="file-image"
+        />
+        <div class="file-info">
+          <span>{{ selectedFile.name }}</span>
+          <button class="remove-file-button" @click="removeFile">×</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "ProductInfo",
@@ -58,140 +95,68 @@ export default defineComponent({
       required: true,
     },
     sizes: {
-      type: Array as () => string[], // Array of strings (sizes)
+      type: Array as () => string[],
       required: true,
     },
   },
-  data() {
-    return {
-      selectedSize: this.sizes[0] || "", // Default to the first size or an empty string
-      quantity: 1, // Default quantity
+  setup(props) {
+    const selectedSize = ref<string>(props.sizes[0] || ""); // İlk bedeni varsayılan olarak seçme
+    const quantity = ref<number>(1); // Varsayılan miktar
+    const fileInput = ref<HTMLInputElement | null>(null); // Dosya girişi referansı
+    const selectedFile = ref<File | null>(null); // Seçilen dosya
+    const imageUrl = ref<string | null>(null); // Resim URL'si
+
+    const increaseQuantity = () => {
+      quantity.value++;
     };
-  },
-  methods: {
-    addToCart() {
-      alert(
-        `Product added to cart with size: ${this.selectedSize} and quantity: ${this.quantity}`
-      );
-    },
-    increaseQuantity() {
-      this.quantity++;
-    },
-    decreaseQuantity() {
-      if (this.quantity > 1) {
-        this.quantity--;
+
+    const decreaseQuantity = () => {
+      if (quantity.value > 1) {
+        quantity.value--;
       }
-    },
+    };
+
+    const triggerFileInput = () => {
+      if (fileInput.value) {
+        fileInput.value.click(); // Dosya seçiciyi aç
+      }
+    };
+
+    const handleFileChange = (event: Event) => {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+        const file = input.files[0];
+        selectedFile.value = file;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          imageUrl.value = e.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    const removeFile = () => {
+      selectedFile.value = null;
+      imageUrl.value = null;
+      if (fileInput.value) {
+        fileInput.value.value = ""; // Dosya seçiciyi sıfırla
+      }
+    };
+
+    return {
+      selectedSize,
+      quantity,
+      fileInput,
+      selectedFile,
+      imageUrl,
+      increaseQuantity,
+      decreaseQuantity,
+      triggerFileInput,
+      handleFileChange,
+      removeFile,
+    };
   },
 });
 </script>
 
-<style scoped>
-.product-info {
-  width: 45%;
-}
-
-.product-description {
-  margin: 20px 0;
-}
-
-.product-price {
-  font-size: 24px;
-  color: #333;
-}
-
-.size-selection {
-  margin-bottom: 20px;
-}
-
-.size-button {
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: white;
-  border: 2px solid #333;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  color: #333;
-}
-
-.size-button.selected {
-  background-color: #333;
-  color: white;
-}
-
-.quantity-wrapper {
-  display: flex;
-  align-items: center;
-  background-color: #fff; /* Beyaz arka plan rengi */
-  border: 1px solid #ccc; /* Çerçeve rengi */
-  border-radius: 55px; /* Yuvarlatılmış köşeler */
-  padding: 0; /* İç boşlukları sıfırla */
-  width: fit-content; /* İçeriğe göre genişlik */
-  height: fit-content; /* İçeriğe göre yükseklik */
-}
-
-.quantity-button {
-  width: 40px;
-  height: 40px;
-  background-color: white;
-  border: 2px solid #fff; /* Çerçeve rengi */
-  border-radius: 50%; /* Yuvarlak düğmeler */
-  font-size: 18px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin: 0; /* Marginleri kaldır */
-}
-
-.quantity-button:focus {
-  outline: none;
-}
-
-.quantity-input {
-  width: 60px;
-  height: 34px;
-  border: 1px solid #fff; /* Çerçeve rengi */
-  text-align: center;
-  font-size: 18px;
-  margin: 0; /* Marginleri kaldır */
-  border-radius: 55px; /* Yuvarlatılmış köşeler */
-  background-color: white; /* Beyaz arka plan */
-  color: #333; /* Yazı rengi */
-}
-
-/* Varsayılan spin butonlarını gizle */
-.quantity-input::-webkit-inner-spin-button,
-.quantity-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Odaklanıldığında dış çizgiyi kaldır */
-.quantity-input:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.quantity-button.quantity-minus {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-right: none;
-}
-
-.quantity-button.quantity-plus {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-left: none;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-</style>
+<style src="@/styles/css/ProductInfo.css"></style>

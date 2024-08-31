@@ -10,6 +10,8 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useRoute } from "vue-router";
+import { Breadcrumb } from "@/types/BreadcrumbModel";
+import "@/styles/css/Breadcrumb.css";
 
 export default defineComponent({
   name: "AppBreadcrumb",
@@ -20,7 +22,7 @@ export default defineComponent({
     const isHomePage = computed(() => route.path === "/");
 
     // Compute breadcrumb data
-    const breadcrumbs = computed(() => {
+    const breadcrumbs = computed<Breadcrumb[]>(() => {
       // Get the path segments and exclude the leading empty segment
       const pathArray = route.path.split("/").filter((p) => p);
 
@@ -49,32 +51,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.breadcrumb {
-  font-size: 16px;
-  color: #333;
-  display: flex;
-  align-items: center;
-}
-
-.breadcrumb a {
-  text-decoration: none;
-  color: #000000;
-  font-weight: 500;
-}
-
-.breadcrumb a:hover {
-  text-decoration: underline;
-  color: #000000; /* Darker shade for hover effect */
-}
-
-.breadcrumb span {
-  color: #666;
-  margin: 0 0.25rem;
-}
-
-.breadcrumb span:not(:last-child)::after {
-  color: #999;
-}
-</style>

@@ -27,7 +27,7 @@
             />
           </div>
         </div>
-        <div class="form-group full-width">
+        <div class="form-group message-group">
           <label for="message">Message*</label>
           <textarea
             id="message"
@@ -46,100 +46,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { FormData } from "@/types/ContactFormModel";
+import "@/styles/css/ContactForm.css";
 
 export default defineComponent({
-  name: "ContactPage",
-  data() {
-    return {
-      formData: {
-        email: "",
-        name: "",
-        message: "",
-      },
-    };
-  },
-  methods: {
-    submitForm() {
+  name: "ContactForm",
+  setup() {
+    const formData = ref<FormData>({
+      email: "",
+      name: "",
+      message: "",
+    });
+
+    const submitForm = () => {
       // Handle form submission
-      console.log("Form submitted", this.formData);
-    },
+      console.log("Form submitted", formData.value);
+    };
+
+    return {
+      formData,
+      submitForm,
+    };
   },
 });
 </script>
-
-<style scoped>
-.contact-page {
-  padding: 2rem;
-  text-align: center;
-}
-
-.contact-header {
-  margin-bottom: 2rem;
-}
-
-.contact-form-container {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: left;
-}
-
-.form-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin-right: 1rem;
-}
-
-.form-group:last-child {
-  margin-right: 0;
-}
-
-.full-width {
-  flex: 1;
-  margin-right: 0;
-  width: 100%;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-textarea {
-  resize: vertical;
-  min-height: 150px;
-}
-
-.submit-button {
-  display: block;
-  width: 100%;
-  margin-top: 1rem;
-  padding: 1rem;
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #333;
-}
-
-.contact-address {
-  margin-top: 1rem;
-  font-size: 1rem;
-}
-</style>

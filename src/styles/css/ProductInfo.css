@@ -1,0 +1,155 @@
+.product-info {
+    width: 45%;
+  }
+  
+  .product-description {
+    margin: 20px 0;
+  }
+  
+  .product-price {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .size-selection {
+    margin-bottom: 20px;
+  }
+  
+  .size-button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: white;
+    border: 2px solid #333;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .size-button.selected {
+    background-color: #333;
+    color: white;
+  }
+  
+  .quantity-and-cart {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .quantity-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 55px;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+  }
+  
+  .quantity-button {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0;
+  }
+  
+  .quantity-button:focus {
+    outline: none;
+  }
+  
+  .quantity-input {
+    width: 30px;
+    height: 34px;
+    border: 1px solid #fff;
+    text-align: center;
+    font-size: 18px;
+    margin: 0;
+    border-radius: 55px;
+    background-color: white;
+    color: #333;
+  }
+  
+  .quantity-input::-webkit-inner-spin-button,
+  .quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .quantity-input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .quantity-button.quantity-minus {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+  }
+  
+  .quantity-button.quantity-plus {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+  }
+  
+  .upload-file-button {
+    padding: 13px 20px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 55px;
+  }
+  
+  .file-preview {
+    margin-top: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #fff;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .file-preview-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .file-image {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  
+  .file-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .file-info span {
+    margin-right: 10px;
+  }
+  
+  .remove-file-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: red;
+    cursor: pointer;
+  }
+  
