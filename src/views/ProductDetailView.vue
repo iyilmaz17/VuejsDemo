@@ -9,74 +9,53 @@
         :sizes="productSizes"
       />
     </div>
+    <hr class="page-divider" />
     <UserReviews :reviews="reviews" />
+    <hr class="page-divider" />
+    <FrequentlyAskedQuestions />
   </div>
 </template>
 
 <script lang="ts">
 import ProductImages from "@/components/ProductImages.vue";
 import ProductInfo from "@/components/ProductInfo.vue";
-import UserReviews from "@/components/UserReviews.vue"; // Import the component
+import UserReviews from "@/components/UserReviews.vue";
+import FrequentlyAskedQuestions from "@/components/FrequentlyAskedQuestions.vue";
+import {
+  productImages,
+  productTitle,
+  productDescription,
+  productPrice,
+  productSizes,
+  reviews,
+} from "@/types/UserReviewsModel";
 
 export default {
   components: {
     ProductImages,
     ProductInfo,
-    UserReviews, // Register the component
+    UserReviews,
+    FrequentlyAskedQuestions,
   },
   data() {
     return {
-      productImages: [
-        require("@/assets/product1.jpg"),
-        require("@/assets/product2.jpg"),
-        require("@/assets/product3.jpg"),
-      ],
-      productTitle: "DTF Sheet",
-      productDescription:
-        "High-quality DTF transfer sheet for all your printing needs.",
-      productPrice: 19.99,
-      productSizes: [
-        "22x25",
-        "24x36",
-        "30x40",
-        "40x50",
-        "50x60",
-        "60x70",
-        "70x80",
-        "80x90",
-        "90x100",
-        "100x110",
-        "110x120",
-      ],
-      reviews: [
-        {
-          id: 1,
-          userImage: require("@/assets/women.jpeg"),
-          userName: "Alice",
-          date: "2024-08-30",
-          title: "Fantastic Product", // Add the title
-          content:
-            "Great product! The quality is superb and delivery was quick.Great product! The quality is superb and delivery was quick.",
-          rating: 1, // 5 stars
-          productImage: require("@/assets/product1.jpg"),
-        },
-        {
-          id: 2,
-          userImage: require("@/assets/man.png"),
-          userName: "Bob",
-          date: "2024-08-29",
-          title: "Good, but not perfect", // Add the title
-          content: "Not bad, but I expected a higher quality.",
-          rating: 4, // 4 stars
-          productImage: require("@/assets/product2.jpg"),
-        },
-      ],
+      productImages,
+      productTitle,
+      productDescription,
+      productPrice,
+      productSizes,
+      reviews,
     };
   },
 };
 </script>
 
 <style scoped>
+.page-divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
 .product-detail-container {
   display: flex;
   justify-content: space-between;
